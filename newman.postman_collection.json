@@ -1,0 +1,121 @@
+{
+	"info": {
+		"_postman_id": "ec3a0e39-5485-4310-8558-488e2468de9e",
+		"name": "newman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19274377",
+		"_collection_link": "https://lunar-meadow-284633.postman.co/workspace/course~35f2b387-eb6e-4696-935a-dd869bde4075/collection/19274377-ec3a0e39-5485-4310-8558-488e2468de9e?action=share&source=collection_link&creator=19274377"
+	},
+	"item": [
+		{
+			"name": "delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts/1",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response has the required fields\", function () {",
+							"  const responseData = pm.response.json();",
+							"  ",
+							"  pm.expect(responseData).to.be.an('array');",
+							"  responseData.forEach(function(comment) {",
+							"    pm.expect(comment).to.include.all.keys('postId', 'id', 'name', 'email', 'body');",
+							"  });",
+							"});",
+							"",
+							"",
+							"pm.test(\"Email is in a valid format\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    responseData.forEach(comment => {",
+							"        pm.expect(comment.email).to.match(/\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b/);",
+							"    });",
+							"});",
+							"",
+							"",
+							"pm.test(\"Body is a non-empty string\", function () {",
+							"    const responseData = pm.response.json();",
+							"    ",
+							"    pm.expect(responseData).to.be.an('array');",
+							"    responseData.forEach(function(comment) {",
+							"        pm.expect(comment.body).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Body should not be empty\");",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/comments?postId=1",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"comments"
+					],
+					"query": [
+						{
+							"key": "postId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
